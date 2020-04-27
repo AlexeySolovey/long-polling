@@ -25,7 +25,7 @@ http.createServer((req, res)=>{
             res.statusCode= 404;
             res.end("Not found");
     }
-}).listen(3000);
+}).listen(process.env.PORT || 3000);
 
 function sendFile(fileName, res){
     var file =new fs.ReadStream(fileName);
