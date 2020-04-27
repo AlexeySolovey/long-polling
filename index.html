@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<style type="text/css">
+  body {
+		font-size: 18px;
+		background: #000;
+		color: #fff;
+	}
+	#container {
+		width: 600px;
+		margin: 100px auto;
+	}
+	</style>
+<head>
+	<meta charset="utf-8" />
+	<title>Demo</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.min.js"></script>
+</head><body> 
+<div id="container">
+	<h1>Long polling</h1>
+	<!-- https://www.youtube.com/watch?v=R2pgKY376xI -->
+
+	<h2>Results will appear here:</h2>
+	<ul id="results">
+    </ul>
+    
+    <input type="text" id="input">
+    <button id='send'>send</button>
+
+</div>
+<script>
+// $.ajaxSetup({headers: {'x-stream': 'rockon', }});
+
+$(function ($) {
+    $('<li>' + 'data' + '</li>').appendTo('#results');
+
+	function longPoll () {
+		$.get('/subscribe', function (data) {
+			console.log(data);
+			$('<li>' + data + '</li>').appendTo('#results');
+			longPoll();
+		});
+	}
+
+    longPoll();
+    
+    $('#send').click(sendMess);
+
+	$("#input").keyup(function(event){
+		if(event.keyCode == 13){
+			sendMess();
+		}
+	});
+
+
+    function sendMess() {
+        console.log('send');
+		const mess = JSON.stringify({"mess": $('#input').val()});
+		$.post('/publish', mess);
+		$('#input').val('');
+    }
+});
+</script>
+</body>
+</html>
