@@ -14,7 +14,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Demo</title>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 </head><body> 
 <div id="container">
 	<h1>Long polling</h1>
@@ -32,8 +32,6 @@
 // $.ajaxSetup({headers: {'x-stream': 'rockon', }});
 
 $(function ($) {
-    $('<li>' + 'data' + '</li>').appendTo('#results');
-
 	function longPoll () {
 		$.get('/subscribe', function (data) {
 			console.log(data);
